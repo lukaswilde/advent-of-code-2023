@@ -4,6 +4,7 @@ members = [
     "day*",
     "utils",
 ]
+resolver = "2"
 
 [profile.test]
 opt-level = 3
