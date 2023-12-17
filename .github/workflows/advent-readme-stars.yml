@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Udate README
         uses: k2bd/advent-readme-stars@v1
@@ -18,32 +18,7 @@ jobs:
           sessionCookie: ${{ secrets.AOC_SESSION }}
           year: 2023
       
-      - name: Raise PR
-        id: readme
-        uses: peter-evans/create-pull-request@v4
+      - name: Commit README changes
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          branch: "auto-readme-pr"
-          base: main
-          title: "Auto update Readme ⭐"
-          token: ${{ secrets.PAT }}
-          delete-branch: true
-          
-      - name: Check PR output
-        if: ${{ steps.readme.outputs.pull-request-number }}
-        run: |
-          echo "Pull Request Number: ${{ steps.readme.outputs.pull-request-number }}"
-          
-      - name: Approve PR
-        if: ${{ steps.readme.outputs.pull-request-number }}
-        uses: juliangruber/approve-pull-request-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.readme.outputs.pull-request-number }}
-          
-      - name: Merge PR
-        if: ${{ steps.readme.outputs.pull-request-number }}
-        uses: juliangruber/merge-pull-request-action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.readme.outputs.pull-request-number }}
-          method: squash
+          commit_message: Update README stars
