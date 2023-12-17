@@ -4,7 +4,7 @@
 
 # Advent of Code 2023
 
-Here you can find my solutions to the [Advent of Code](https://adventofcode.com) puzzles from 2022. I do not focus on speed but rather on 
+Here you can find my solutions to the [Advent of Code](https://adventofcode.com) puzzles from 2023. I do not focus on speed but rather on 
 general and readable solutions using Rust 🦀.
 
 
