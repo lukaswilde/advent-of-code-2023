@@ -13,19 +13,19 @@ jobs:
   day1:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      run: cargo build --verbose --bin day01
-    - name: Run tests
-      run: cargo test -p day01 --verbose
-#  day2:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v3
-#    - name: Build
-#      run: cargo build --verbose --bin day02
-#    - name: Run tests
-#      run: cargo test -p day02 --verbose
+      - uses: actions/checkout@v3
+      - name: Build
+        run: cargo build --verbose --bin day01
+      - name: Run tests
+        run: cargo test -p day01 --verbose
+  day2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: cargo build --verbose --bin day02
+      - name: Run tests
+        run: cargo test -p day02 --verbose
 #  day3:
 #    runs-on: ubuntu-latest
 #    steps:
