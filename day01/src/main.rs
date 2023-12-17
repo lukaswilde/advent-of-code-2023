@@ -32,23 +32,23 @@ fn main() {
 
 fn get_lines(text: &str) -> Vec<String> {
     text.replace(' ', "")
-        .split("\n")
+        .split('\n')
         .map(String::from)
         .collect()
 }
 
-fn transform_numbers(lines: &Vec<String>) -> Vec<String> {
-    lines.into_iter().map(extract_digits).collect()
+fn transform_numbers(lines: &[String]) -> Vec<String> {
+    lines.iter().map(extract_digits).collect()
 }
 
 fn extract_digits(line: &String) -> String {
     let mut res = Vec::new();
     let chars = line.chars().collect::<Vec<_>>();
     for i in 0..line.len() {
-        if chars[i].is_digit(10) {
+        if chars[i].is_ascii_digit() {
             res.push(chars[i].to_digit(10).unwrap())
         }
-        let rest: String = (&chars[i..]).iter().collect();
+        let rest: String = chars[i..].iter().collect();
         if rest.starts_with("one") {
             res.push(1);
         } else if rest.starts_with("two") {
@@ -74,11 +74,14 @@ fn extract_digits(line: &String) -> String {
         .collect()
 }
 
-fn get_calibration_numbers(lines: &Vec<String>) -> Option<Vec<u32>> {
-    lines.into_iter().map(get_calibration_number).collect()
+fn get_calibration_numbers(lines: &[String]) -> Option<Vec<u32>> {
+    lines
+        .iter()
+        .map(|line| get_calibration_number(line))
+        .collect()
 }
 
-fn get_calibration_number(line: &String) -> Option<u32> {
+fn get_calibration_number(line: &str) -> Option<u32> {
     let filtered = line
         .chars()
         .filter_map(|c| c.to_digit(10))
