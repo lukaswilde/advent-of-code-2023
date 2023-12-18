@@ -135,12 +135,7 @@ fn get_valid_parts_sum(engine: &Engine) -> u32 {
             engine
                 .symbol_positions
                 .iter()
-                .cloned()
-                .map(|s| s.pos)
-                .collect::<HashSet<_>>()
-                .intersection(&neighbors)
-                .next()
-                .is_some()
+                .any(|symbol| neighbors.contains(&symbol.pos))
                 .then_some(part.number)
         })
         .sum()
@@ -151,18 +146,15 @@ fn get_gear_ratio_sum(engine: &Engine) -> u32 {
         .symbol_positions
         .iter()
         .cloned()
-        .filter_map(|s| (s.symbol == '*').then_some(s.pos))
-        .collect::<HashSet<_>>();
+        .filter_map(|s| (s.symbol == '*').then_some(s.pos));
 
     valid_symbol_pos
-        .iter()
         .filter_map(|pos| {
             let (num_neighbors, product) = engine
                 .parts
                 .iter()
-                // .map(|part| (part.occupied_positions.contains(pos) as usize, part))
                 .filter(|part| {
-                    get_neighboring_cells(part, engine.width, engine.height).contains(pos)
+                    get_neighboring_cells(part, engine.width, engine.height).contains(&pos)
                 })
                 .fold((0, 1), |acc, el| (acc.0 + 1, acc.1 * el.number));
 
